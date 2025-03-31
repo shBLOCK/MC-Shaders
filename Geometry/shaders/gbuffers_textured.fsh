@@ -11,7 +11,7 @@ in vec2 lmcoord;
 in vec2 texcoord;
 in vec4 glcolor;
 
-#include "common_frag.glsl"
+#include "common/common_frag.glsl"
 
 /* RENDERTARGETS: 0 */
 layout(location = 0) out vec4 color;

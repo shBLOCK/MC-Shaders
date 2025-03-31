@@ -4,7 +4,7 @@ out vec2 lmcoord;
 out vec2 texcoord;
 out vec4 glcolor;
 
-#include "common_vert.glsl"
+#include "common/common_vert.glsl"
 
 void main() {
 	gl_Position = ftransform();
