@@ -7,7 +7,7 @@
 #define FRAME_FADE_SPEED 0.1 // [0.01 0.05 0.1 0.2 0.3 0.5 1.0]
 #define FRAME_FADE_MIN 0.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9]
 
-in vec4 vMarker;
+in vec3 vMarker;
 in float vDistance;
 
 float max4(float a, float b, float c, float d) {
@@ -19,12 +19,7 @@ float minComponent(vec3 v) {
 }
 
 #define FRAG_COMMON(edge, colored_edge, edge_color, fade) {\
-    float a = max4(\
-        minComponent(vMarker.xyz),\
-        minComponent(vMarker.yzw),\
-        minComponent(vMarker.zwx),\
-        minComponent(vMarker.wxy)\
-    ) * 2.0;\
+    float a = minComponent(vMarker) * 2.0;\
     if (a >= ((vDistance - abs(FACE_FADE_OFFSET)) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET)) && fade) {\
 \
     } else {\
