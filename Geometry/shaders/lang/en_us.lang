@@ -1,0 +1,11 @@
+option.FRAME_THICKNESS = Wireframe Thickness
+option.FACE_FADE_OFFSET = Face Fade Offset
+option.FACE_FADE_OFFSET.comment = How far away does the geometry faces start to fade away.
+option.FACE_FADE_SPEED = Face Fade Speed
+option.FACE_FADE_SPEED.comment = How quickly does the geometry faces fade away (after <Face Fade Offset> is reached).
+option.FRAME_FADE_OFFSET = Wireframe Fade Offset
+option.FRAME_FADE_OFFSET.comment = How far away does the wireface start to fade away.
+option.FRAME_FADE_SPEED = Wireframe Fade Speed
+option.FRAME_FADE_SPEED.comment = How quickly does the geometry faces fade away (after <Wireframe Fade Offset> is reached).
+option.FRAME_FADE_MIN = Wireframe Face Min
+option.FRAME_FADE_MIN.comment = The minimal relative thickness of the faded wireframe. (e.g. If <Wireframe Thickness> = 0.1, <Wireframe Face Min> = 0.5, then the actual thickness can't go below 0.05)
