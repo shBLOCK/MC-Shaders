@@ -1,7 +1,5 @@
 #version 330 compatibility
 
-uniform int renderStage;
-
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
 
@@ -20,7 +18,8 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	bool _discard = false;
-	color = texture(gtexture, gTexCoord) * gGlColor;
+	vec4 texcolor = texture(gtexture, gTexCoord);
+	color = texcolor * gGlColor;
 	color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
 	color *= texture(lightmap, gLmCoord);
 	if (color.a < alphaTestRef) {
@@ -30,5 +29,8 @@ void main() {
 	if (renderStage != MC_RENDER_STAGE_WORLD_BORDER && renderStage != MC_RENDER_STAGE_DESTROY) {
 		FRAG_COMMON(1.0, -1.0, vec4(0), true);
 	}
+	// color.a = 1.0;
+	// _discard = false;
+	// if (fract((gTexCoord.x + gTexCoord.y) * 10.0) < 0.5) _discard = false;
 	if (_discard) discard;
 }

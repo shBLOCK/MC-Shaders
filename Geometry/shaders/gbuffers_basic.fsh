@@ -1,7 +1,5 @@
 #version 330 compatibility
 
-uniform int renderStage;
-
 uniform sampler2D lightmap;
 
 uniform float alphaTestRef = 0.1;
@@ -16,6 +14,7 @@ layout(location = 0) out vec4 color;
 
 void main() {
 	bool _discard = false;
+	vec4 texcolor = vec4(-1.0);
 	color = gGlColor * texture(lightmap, gLmCoord);
 	if (color.a < alphaTestRef) {
 		_discard = true;

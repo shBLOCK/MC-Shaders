@@ -1,3 +1,5 @@
+screen.MISC = Misc
+
 option.FRAME_THICKNESS = Wireframe Thickness
 
 option.FACE_FADE_OFFSET = Face Fade Offset
