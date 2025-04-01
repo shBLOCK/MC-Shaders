@@ -1,7 +1,7 @@
 #define FRAME_THICKNESS 0.03 // [0.0 0.01 0.03 0.05 0.1 0.15 0.2 0.3 0.4 0.5]
 
 #define GEOMETRY_MODE 0 // [0 1]
-#define DISTANCE_MODE 1 // [0 1]
+#define DISTANCE_MODE 1 // [0 1 2]
 
 #define FACE_FADE_OFFSET 5.0 // [-INF -50.0 -30.0 -20.0 -15.0 -10.0 -7.0 -5.0 -3.0 -2.0 -1.0 0.0 1.0 2.0 3.0 5.0 7.0 10.0 15.0 20.0 30.0 50.0 INF] 
 #define FACE_FADE_SPEED 0.15 // [0.01 0.05 0.1 0.15 0.2 0.3 0.5 1.0]

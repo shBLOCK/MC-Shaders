@@ -20,3 +20,4 @@ value.GEOMETRY_MODE.1 = Quad
 option.DISTANCE_MODE = Distance Mode
 value.DISTANCE_MODE.0 = Per-Vertex
 value.DISTANCE_MODE.1 = Per-Primitive
+value.DISTANCE_MODE.2 = Per-Vertex Min

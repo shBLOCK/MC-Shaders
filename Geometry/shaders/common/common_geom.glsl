@@ -12,7 +12,7 @@ out float gDistance;
 
 #if DISTANCE_MODE == 0 // per-vertex mode
     #define _IO_DISTANCE gDistance = vDistance[i];
-#elif DISTANCE_MODE == 1 // per-primitive mode
+#elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2 // per-primitive mode
     #define _IO_DISTANCE ; // don't do anything, vDistance is already set in main()
 #endif
 
@@ -31,6 +31,12 @@ out float gDistance;
         #define _MAIN_DISTANCE gDistance = (vDistance[0] + vDistance[1] + vDistance[2]) / 3.0;
     #elif GEOMETRY_MODE == 1
         #define _MAIN_DISTANCE gDistance = (vDistance[0] + vDistance[2]) / 2.0;
+    #endif
+#elif DISTANCE_MODE == 2
+    #if GEOMETRY_MODE == 0
+        #define _MAIN_DISTANCE gDistance = min(vDistance[0], min(vDistance[1], vDistance[2]));
+    #elif GEOMETRY_MODE == 1
+        #define _MAIN_DISTANCE gDistance = min(vDistance[0], vDistance[2]);
     #endif
 #endif
 
