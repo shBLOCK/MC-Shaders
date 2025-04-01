@@ -1,4 +1,4 @@
-#define GEOMETRY_MODE 0 // [0 1]
+#include "settings.glsl"
 
 out vec3 vMarker;
 out float vDistance;

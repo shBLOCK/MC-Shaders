@@ -16,3 +16,7 @@ option.FRAME_FADE_MIN.comment = The minimal relative thickness of the faded wire
 option.GEOMETRY_MODE = Geometry Mode
 value.GEOMETRY_MODE.0 = Triangle
 value.GEOMETRY_MODE.1 = Quad
+
+option.DISTANCE_MODE = Distance Mode
+value.DISTANCE_MODE.0 = Per-Vertex
+value.DISTANCE_MODE.1 = Per-Primitive
