@@ -1,7 +1,15 @@
 #include "settings.glsl"
 
+uniform mat4 modelViewMatrix;
+uniform mat4 gbufferModelViewInverse;
+
+in vec2 mc_Entity;
+
+out vec3 vViewPos;
+out vec3 vNormal;
 out vec3 vMarker;
 out float vDistance;
+flat out int vEntity;
 
 #if GEOMETRY_MODE == 0 // Triangle mode
 	#define _VERT_MARKER() \
@@ -32,8 +40,11 @@ out float vDistance;
 #endif
 
 #define VERT_COMMON() {\
+	vViewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;\
+	gl_Position = gl_ProjectionMatrix * vec4(vViewPos, 1.0);\
+	vNormal = gl_NormalMatrix * gl_Normal;\
     vMarker = vec3(0.0);\
 	_VERT_MARKER();\
-	vec3 viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;\
-    vDistance = length(viewPos);\
+    vDistance = length(vViewPos);\
+	vEntity = int(mc_Entity.x);\
 }

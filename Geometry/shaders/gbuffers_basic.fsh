@@ -21,7 +21,7 @@ void main() {
 	}
 
 	if (renderStage != MC_RENDER_STAGE_OUTLINE && renderStage != MC_RENDER_STAGE_DEBUG) {
-		FRAG_COMMON(1.0, -1.0, vec4(0), true);
+		FRAG_COMMON(1.0, -1.0, vec4(0));
 	}
 
 	if (_discard) discard;

@@ -7,10 +7,10 @@ out vec2 gLmCoord;
 in vec4 vGlColor[];
 out vec4 gGlColor;
 
-EMITTER_HEAD
+SETUP_VERTEX_HEAD
 gTexCoord = vTexCoord[i];
 gLmCoord = vLmCoord[i];
 gGlColor = vGlColor[i];
-EMITTER_TAIL
+SETUP_VERTEX_TAIL
 
 MAIN()

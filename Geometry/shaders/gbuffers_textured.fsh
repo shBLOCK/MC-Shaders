@@ -27,10 +27,7 @@ void main() {
 	}
 	
 	if (renderStage != MC_RENDER_STAGE_WORLD_BORDER && renderStage != MC_RENDER_STAGE_DESTROY) {
-		FRAG_COMMON(1.0, -1.0, vec4(0), true);
+		FRAG_COMMON(1.0, -1.0, vec4(0));
 	}
-	// color.a = 1.0;
-	// _discard = false;
-	// if (fract((gTexCoord.x + gTexCoord.y) * 10.0) < 0.5) _discard = false;
 	if (_discard) discard;
 }

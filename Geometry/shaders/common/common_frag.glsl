@@ -6,6 +6,9 @@ uniform int renderStage;
 
 in vec3 gMarker;
 in float gDistance;
+flat in int gEntity;
+
+flat in int gModeMask;
 
 float max4(float a, float b, float c, float d) {
     return max(a, max(b, max(c, b)));
@@ -22,6 +25,12 @@ float minComponent(vec3 v) {
 #endif
 
 bool _shouldIgnoreDiscard(vec4 texcolor) {
+    if (texcolor.a == 0.0) {
+        #ifdef KEEP_DISCARD_LISTED_BLOCKS_ZERO_ALPHA
+            if (1000 <= gEntity && gEntity < 2000) return false;
+        #endif
+    }
+
     switch (renderStage) {
         case MC_RENDER_STAGE_ENTITIES:
             #ifdef KEEP_DISCARD_ENTITIES_ZERO_ALPHA
@@ -50,22 +59,26 @@ bool _shouldIgnoreDiscard(vec4 texcolor) {
     return true;
 }
 
-#define FRAG_COMMON(edge, colored_edge, edge_color, fade) {\
+#define FRAG_COMMON(edge, colored_edge, edge_color) {\
     float a = minComponent(gMarker);\
-    if ((a * _FACE_SCALE) >= ((gDistance - abs(FACE_FADE_OFFSET)) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET)) && fade) {\
+    if ((gModeMask & 2) != 0 && (a * _FACE_SCALE) >= ((gDistance - abs(FACE_FADE_OFFSET)) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET))) {\
 \
     } else {\
-        if (a > edge * FRAME_THICKNESS * clamp((abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET), FRAME_FADE_MIN, 1.0)) {\
-            _discard = true;\
-        } else {\
-            if (_shouldIgnoreDiscard(texcolor)) {\
-                _discard = false;\
-                color.a = 1.0;\
+        if ((gModeMask & 1) != 0) {\
+            if (a > edge * FRAME_THICKNESS * clamp((abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET), FRAME_FADE_MIN, 1.0)) {\
+                _discard = true;\
+            } else {\
+                if (_shouldIgnoreDiscard(texcolor)) {\
+                    _discard = false;\
+                    color.a = 1.0;\
+                }\
             }\
-        }\
-        if (a <= colored_edge) {\
-            color = edge_color;\
-            _discard = false;\
+            if (a <= colored_edge) {\
+                color = edge_color;\
+                _discard = false;\
+            }\
+        } else {\
+            _discard = true;\
         }\
     }\
 }
