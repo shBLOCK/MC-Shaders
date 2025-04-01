@@ -22,11 +22,17 @@ out float gDistance;
 out vec2 gFade;
 flat out int gModeMask;
 
-//region Distance
+void _updateFade() {
+    gFade.x = (abs(FACE_FADE_OFFSET) - gDistance) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET) + 1.0;
+    gFade.y = (abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET) + 1.0;
+}
+
 #if DISTANCE_MODE == 0 // per-vertex
-    #define _IO_DISTANCE gDistance = length(vViewPos[i]);
+    #define _SETUP_DISTANCE gDistance = length(vViewPos[i]);
+    #define _SETUP_FADE _updateFade();
 #elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2
-    #define _IO_DISTANCE ; // don't do anything, gDistance is already set in main()
+    #define _SETUP_DISTANCE ; // don't do anything, gDistance is already set in main()
+    #define _SETUP_FADE ;
 #endif
 
 #if DISTANCE_MODE == 0
@@ -44,14 +50,18 @@ flat out int gModeMask;
         #define _MAIN_EX_DISTANCE gDistance = min(length(vViewPos[0]), length(vViewPos[2]));
     #endif
 #endif
-//endregion
+
+#if DISTANCE_MODE == 0
+    #define _MAIN_EX_FADE ;
+#elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2
+    #define _MAIN_EX_FADE _updateFade();
+#endif
 
 #define SETUP_VERTEX_HEAD void setupVertex(int i) {\
     gl_Position = gl_in[i].gl_Position;\
     gMarker = vMarker[i];\
-    _IO_DISTANCE;\
-    gFade.x = (abs(FACE_FADE_OFFSET) - gDistance) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET) + 1.0;\
-    gFade.y = (abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET) + 1.0;\
+    _SETUP_DISTANCE;\
+    _SETUP_FADE;\
     gEntity = vEntity[i];
 #define SETUP_VERTEX_TAIL \
 }
@@ -113,15 +123,27 @@ flat out int gModeMask;
     #define _MAIN_EX_MODE_MASK 1 // 0b01
 #endif
 
-bool shouldDiscard() {
-    //TODO
+bool _shouldDiscard() {
+    #if DISTANCE_MODE == 0
+        for (int i = 0; i < 3; i++) {
+            gDistance = length(vViewPos[i]);
+            _updateFade();
+            if (gFade.x > 0.0 || gFade.y > 0.0) return false;
+        }
+        return true;
+    #elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2
+        // gFade should have been set up already
+        if (gFade.x < 0.0 && gFade.y < 0.0) return true;
+    #endif
+    
     return false;
 }
 
 #define MAIN() void main() {\
     gModeMask = _MAIN_EX_MODE_MASK;\
     _MAIN_EX_DISTANCE;\
-    if (shouldDiscard()) return;\
+    _MAIN_EX_FADE;\
+    if (_shouldDiscard()) return;\
     setupVertex(0);\
     EmitVertex();\
     setupVertex(1);\
