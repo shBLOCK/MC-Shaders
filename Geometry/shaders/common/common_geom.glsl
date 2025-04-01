@@ -63,6 +63,16 @@ flat out int gModeMask;
 
     void _setupFaceVertex(int i) {
         vec3 pos = vPos[i];
+
+        #if FACE_FADE_MODE == 1 // scale mode
+            #if GEOMETRY_MODE == 0
+                vec3 center = (vPos[0] + vPos[1] + vPos[2]) / 3.0;
+            #elif GEOMETRY_MODE == 1
+                vec3 center = (vPos[0] + vPos[2]) / 2.0;
+            #endif
+            pos = mix(pos, center, clamp(1.0 - gFade.x, 0.0, 1.0));
+        #endif
+
         vec3 normal = vNormal[i];
         if (FACE_NORMAL_DISPLACEMENT != 0.0) {
             bool isOrthogonal = abs(max(abs(normal.x), max(abs(normal.y), abs(normal.z))) - 1.0) < 0.01;

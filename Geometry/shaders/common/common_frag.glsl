@@ -79,7 +79,7 @@ bool _shouldIgnoreDiscard(vec4 texcolor) {
                 _discard = false;\
             }\
         } else {\
-            _discard = true;\
+            if (FACE_FADE_MODE == 0) _discard = true;\
         }\
     }\
 }
