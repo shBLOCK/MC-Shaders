@@ -5,10 +5,10 @@ uniform mat4 gbufferModelViewInverse;
 
 in vec2 mc_Entity;
 
+out vec3 vPos;
 out vec3 vViewPos;
 out vec3 vNormal;
 out vec3 vMarker;
-out float vDistance;
 flat out int vEntity;
 
 #if GEOMETRY_MODE == 0 // Triangle mode
@@ -40,11 +40,11 @@ flat out int vEntity;
 #endif
 
 #define VERT_COMMON() {\
-	vViewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;\
+	vPos = gl_Vertex.xyz;\
+	vViewPos = (gl_ModelViewMatrix * vec4(vPos, 1.0)).xyz;\
 	gl_Position = gl_ProjectionMatrix * vec4(vViewPos, 1.0);\
-	vNormal = gl_NormalMatrix * gl_Normal;\
+	vNormal = gl_Normal;\
     vMarker = vec3(0.0);\
 	_VERT_MARKER();\
-    vDistance = length(vViewPos);\
 	vEntity = int(mc_Entity.x);\
 }
