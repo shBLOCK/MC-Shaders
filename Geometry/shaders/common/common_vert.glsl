@@ -46,5 +46,5 @@ flat out int vEntity;
 	vNormal = gl_Normal;\
     vMarker = vec3(0.0);\
 	_VERT_MARKER();\
-	vEntity = int(mc_Entity.x);\
+	vEntity = max(0, int(mc_Entity.x));\
 }
