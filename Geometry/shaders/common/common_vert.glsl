@@ -3,6 +3,8 @@
 uniform mat4 modelViewMatrix;
 uniform mat4 gbufferModelViewInverse;
 
+uniform int renderStage;
+uniform int blockEntityId;
 in vec2 mc_Entity;
 
 out vec3 vPos;
@@ -47,4 +49,8 @@ flat out int vEntity;
     vMarker = vec3(0.0);\
 	_VERT_MARKER();\
 	vEntity = max(0, int(mc_Entity.x));\
+	if (renderStage == MC_RENDER_STAGE_BLOCK_ENTITIES) {\
+		vEntity = max(0, blockEntityId);\
+		if (vEntity == 65535) vEntity = 0;\
+	}\
 }
