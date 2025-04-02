@@ -140,12 +140,12 @@ void main() {
             
             if (FACE_DISPLACEMENT != 0.0) {
                 bool isOrthogonal = abs(max(abs(normal.x), max(abs(normal.y), abs(normal.z))) - 1.0) < 0.01;
-                if ((m_entity & 256) != 0) {
-                } else if ((m_entity & 512) != 0 && !isOrthogonal) {
+                if (bool(m_entity & 256)) {
+                } else if (bool(m_entity & 512) && !isOrthogonal) {
                 } else {
                     vec3 baseDisplacement = normal;
-                    if ((m_entity & 1024) != 0) baseDisplacement = vec3(0.0, 1.0, 0.0);
-                    if ((m_entity & 2048) != 0 && !isOrthogonal) baseDisplacement = vec3(0.0, 1.0, 0.0);
+                    if (bool(m_entity & 1024)) baseDisplacement = vec3(0.0, 1.0, 0.0);
+                    if (bool(m_entity & 2048) && !isOrthogonal) baseDisplacement = vec3(0.0, 1.0, 0.0);
                     baseDisplacement *= _calcSideLengthSum(vViewPos[0], vViewPos[1], vViewPos[2]);
 
                     pos[0] += baseDisplacement * pow(clamp(1.0 - M_FADE(0).x, 0.0, 1.0), FACE_DISPLACEMENT_CURVE) * FACE_DISPLACEMENT;

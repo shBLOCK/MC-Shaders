@@ -21,7 +21,7 @@ float minComponent(vec3 v) {
 bool _shouldIgnoreDiscard(vec4 texcolor) {
     if (texcolor.a == 0.0) {
         #ifdef KEEP_DISCARD_LISTED_BLOCKS_ZERO_ALPHA
-            if ((gEntity & 128) != 0) return false;
+            if (bool(gEntity & 128)) return false;
         #endif
     }
 
@@ -63,7 +63,7 @@ void fragCommon(inout bool _discard, inout vec4 color, in vec4 texcolor) {
     #endif
 
     if (a * _FACE_SCALE > (1.0 - gFade.x)) { // in fading face
-        if ((gModeMask & 2) != 0) {
+        if (bool(gModeMask & 2)) {
             #if !(SHOW_BACKFACE & 2)
                 if (!bool(gIsFrontFace)) _discard = true;
             #endif
@@ -71,7 +71,7 @@ void fragCommon(inout bool _discard, inout vec4 color, in vec4 texcolor) {
             _discard = true;
         }
     } else {
-        if ((gModeMask & 1) != 0) {
+        if (bool(gModeMask & 1)) {
             if (a > FRAME_THICKNESS * clamp(gFade.y, FRAME_FADE_MIN, 1.0)) { // not in fading frame
                 _discard = true;
             } else {
