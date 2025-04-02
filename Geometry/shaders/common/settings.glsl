@@ -24,9 +24,9 @@
 // 0: clip; 1: scale
 #define FACE_FADE_MODE 0 // [0 1]
 // #define FACE_SEPARATE
-#define FACE_NORMAL_DISPLACEMENT 0.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
-#define FACE_NORMAL_DISPLACEMENT_CURVE 3.0 // [0.25 0.5 1.0 2.0 3.0 4.0 5.0]
+#define FACE_DISPLACEMENT 0.0 // [0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0]
+#define FACE_DISPLACEMENT_CURVE 3.0 // [0.25 0.5 1.0 2.0 3.0 4.0 5.0]
 
-// Bit 0: show backface for wireframe
-// Bit 1: show backface for faces
+// Bit 0 (1): show backface for wireframe
+// Bit 1 (2): show backface for faces
 #define SHOW_BACKFACE 0 // [0 1 2 3]

@@ -8,6 +8,7 @@ flat in int gEntity;
 
 in vec2 gFade;
 flat in int gModeMask;
+flat in int gIsFrontFace;
 
 float max4(float a, float b, float c, float d) {
     return max(a, max(b, max(c, b)));
@@ -16,12 +17,6 @@ float max4(float a, float b, float c, float d) {
 float minComponent(vec3 v) {
     return min(v.x, min(v.y, v.z));
 }
-
-#if GEOMETRY_MODE == 0
-    #define _FACE_SCALE 3.0
-#elif GEOMETRY_MODE == 1
-    #define _FACE_SCALE 2.0
-#endif
 
 bool _shouldIgnoreDiscard(vec4 texcolor) {
     if (texcolor.a == 0.0) {
@@ -58,19 +53,35 @@ bool _shouldIgnoreDiscard(vec4 texcolor) {
     return true;
 }
 
-void fragCommon(in out bool _discard, in out vec4 color, in vec4 texcolor) {
+void fragCommon(inout bool _discard, inout vec4 color, in vec4 texcolor) {
     float a = minComponent(gMarker);
-    if ((1.0 - a * _FACE_SCALE) < gFade.x) {
-        if ((gModeMask & 2) == 0) _discard = true;
+
+    #if GEOMETRY_MODE == 0
+        #define _FACE_SCALE 3.0
+    #elif GEOMETRY_MODE == 1
+        #define _FACE_SCALE 2.0
+    #endif
+
+    if (a * _FACE_SCALE > (1.0 - gFade.x)) { // in fading face
+        if ((gModeMask & 2) != 0) {
+            #if !(SHOW_BACKFACE & 2)
+                if (!bool(gIsFrontFace)) _discard = true;
+            #endif
+        } else {
+            _discard = true;
+        }
     } else {
         if ((gModeMask & 1) != 0) {
-            if (a > FRAME_THICKNESS * clamp(gFade.y, FRAME_FADE_MIN, 1.0)) {
+            if (a > FRAME_THICKNESS * clamp(gFade.y, FRAME_FADE_MIN, 1.0)) { // not in fading frame
                 _discard = true;
             } else {
                 if (_shouldIgnoreDiscard(texcolor)) {
                     _discard = false;
                     color.a = 1.0;
                 }
+                #if !(SHOW_BACKFACE & 1)
+                    if (!bool(gIsFrontFace)) _discard = true;
+                #endif
             }
             // if (a <= colored_edge) {
             //     color = edge_color;
