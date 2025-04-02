@@ -1,7 +1,5 @@
 #include "settings.glsl"
 
-#define INF intBitsToFloat(0x7F800000)
-
 uniform int renderStage;
 
 in vec3 gMarker;

@@ -1,5 +1,6 @@
 #version 330 compatibility
 
+#include "utils.glsl"
 #include "settings.glsl"
 
 layout(triangles) in;
@@ -25,6 +26,7 @@ flat out int gModeMask;
 void _updateFade() {
     gFade.x = (abs(FACE_FADE_OFFSET) - gDistance) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET) + 1.0;
     gFade.y = (abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET) + 1.0;
+    gFade = clamp(gFade, vec2(-1e30), vec2(1e30));
 }
 
 #if DISTANCE_MODE == 0 // per-vertex

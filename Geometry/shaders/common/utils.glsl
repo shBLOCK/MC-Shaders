@@ -1,0 +1,1 @@
+#define INF intBitsToFloat(0x7F800000)
