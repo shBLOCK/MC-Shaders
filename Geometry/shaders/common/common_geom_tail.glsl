@@ -81,6 +81,13 @@ void main() {
         #define M_FADE(i) m_fade
     #endif
 
+    bool noInvertBackface = false;
+    #ifdef IN_VERTEX_TEXCOORD
+        // don't invert backface for inner surfaces of double surface blocks (e.g. water, lava, powder_snow)
+        if (determinant(mat2(IN_VERTEX_TEXCOORD[0] - IN_VERTEX_TEXCOORD[1], IN_VERTEX_TEXCOORD[2] - IN_VERTEX_TEXCOORD[1])) < 0.0)
+            noInvertBackface = true;
+    #endif
+
     if (_frameNotFaded) {
         bool isFrontface = dot(vViewPos[0], gl_NormalMatrix * vNormal[0]) <= 0.0;
 
@@ -103,7 +110,7 @@ void main() {
 
             {SETUP_VERTEX(0)}
             EmitVertex();
-            if (isFrontface) {
+            if (isFrontface || noInvertBackface) {
                 {SETUP_VERTEX(1)}
                 EmitVertex();
                 {SETUP_VERTEX(2)}
@@ -168,7 +175,7 @@ void main() {
 
                 {SETUP_VERTEX_FACE(0)}
                 EmitVertex();
-                if (isFrontface) {
+                if (isFrontface || noInvertBackface) {
                     {SETUP_VERTEX_FACE(1)}
                     EmitVertex();
                     {SETUP_VERTEX_FACE(2)}

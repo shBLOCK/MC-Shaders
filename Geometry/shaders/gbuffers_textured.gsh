@@ -12,4 +12,6 @@ out vec4 gGlColor;
     gLmCoord = vLmCoord[i];\
     gGlColor = vGlColor[i];
 
+#define IN_VERTEX_TEXCOORD vTexCoord
+
 #include "common/common_geom_tail.glsl"
