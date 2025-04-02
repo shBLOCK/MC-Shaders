@@ -88,7 +88,9 @@ void fragCommon(inout bool _discard, inout vec4 color, in vec4 texcolor) {
             //     _discard = false;
             // }
         } else {
-            if (FACE_FADE_MODE == 0) _discard = true;
+            #if FACE_FADE_MODE == 0
+                _discard = true;
+            #endif
         }
     }
 }

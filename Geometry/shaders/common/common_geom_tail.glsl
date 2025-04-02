@@ -137,6 +137,12 @@ void main() {
 
             vec3 pos[3] = vec3[3](vPos[0], vPos[1], vPos[2]);
             vec3 normal = vNormal[0];
+
+            #if FACE_FADE_MODE == 1
+                pos[0] = mix(pos[0], m_center, clamp(1.0 - M_FADE(0).x, 0.0, 1.0));
+                pos[1] = mix(pos[1], m_center, clamp(1.0 - M_FADE(1).x, 0.0, 1.0));
+                pos[2] = mix(pos[2], m_center, clamp(1.0 - M_FADE(2).x, 0.0, 1.0));
+            #endif
             
             if (FACE_DISPLACEMENT != 0.0) {
                 bool isOrthogonal = abs(max(abs(normal.x), max(abs(normal.y), abs(normal.z))) - 1.0) < 0.01;
