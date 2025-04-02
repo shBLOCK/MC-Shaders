@@ -27,7 +27,7 @@ void main() {
 	}
 	
 	if (renderStage != MC_RENDER_STAGE_WORLD_BORDER && renderStage != MC_RENDER_STAGE_DESTROY) {
-		FRAG_COMMON(1.0, -1.0, vec4(0));
+		fragCommon(_discard, color, texcolor);
 	}
 	if (_discard) discard;
 }

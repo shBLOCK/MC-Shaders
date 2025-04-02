@@ -58,26 +58,26 @@ bool _shouldIgnoreDiscard(vec4 texcolor) {
     return true;
 }
 
-#define FRAG_COMMON(edge, colored_edge, edge_color) {\
-    float a = minComponent(gMarker);\
-    if ((1.0 - a * _FACE_SCALE) < gFade.x) {\
-        if ((gModeMask & 2) == 0) _discard = true;\
-    } else {\
-        if ((gModeMask & 1) != 0) {\
-            if (a > edge * FRAME_THICKNESS * clamp(gFade.y, FRAME_FADE_MIN, 1.0)) {\
-                _discard = true;\
-            } else {\
-                if (_shouldIgnoreDiscard(texcolor)) {\
-                    _discard = false;\
-                    color.a = 1.0;\
-                }\
-            }\
-            if (a <= colored_edge) {\
-                color = edge_color;\
-                _discard = false;\
-            }\
-        } else {\
-            if (FACE_FADE_MODE == 0) _discard = true;\
-        }\
-    }\
+void fragCommon(in out bool _discard, in out vec4 color, in vec4 texcolor) {
+    float a = minComponent(gMarker);
+    if ((1.0 - a * _FACE_SCALE) < gFade.x) {
+        if ((gModeMask & 2) == 0) _discard = true;
+    } else {
+        if ((gModeMask & 1) != 0) {
+            if (a > FRAME_THICKNESS * clamp(gFade.y, FRAME_FADE_MIN, 1.0)) {
+                _discard = true;
+            } else {
+                if (_shouldIgnoreDiscard(texcolor)) {
+                    _discard = false;
+                    color.a = 1.0;
+                }
+            }
+            // if (a <= colored_edge) {
+            //     color = edge_color;
+            //     _discard = false;
+            // }
+        } else {
+            if (FACE_FADE_MODE == 0) _discard = true;
+        }
+    }
 }
