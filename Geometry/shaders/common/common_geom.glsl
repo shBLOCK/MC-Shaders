@@ -12,7 +12,7 @@ layout(triangles) in;
 
 in vec3 vPos[];
 in vec3 vViewPos[];
-in vec3 vNormal[];
+flat in vec3 vNormal[];
 
 in vec3 vMarker[];
 out vec3 gMarker;
@@ -146,12 +146,20 @@ bool _shouldDiscard() {
     _MAIN_EX_DISTANCE;\
     _MAIN_EX_FADE;\
     if (_shouldDiscard()) return;\
+    bool isFrontface = dot(vViewPos[0], gl_NormalMatrix * vNormal[0]) <= 0.0;\
     setupVertex(0);\
     EmitVertex();\
-    setupVertex(1);\
-    EmitVertex();\
-    setupVertex(2);\
-    EmitVertex();\
+    if (isFrontface) {\
+        setupVertex(1);\
+        EmitVertex();\
+        setupVertex(2);\
+        EmitVertex();\
+    } else {\
+        setupVertex(2);\
+        EmitVertex();\
+        setupVertex(1);\
+        EmitVertex();\
+    }\
     EndPrimitive();\
     _MAIN_EX_FACE;\
 }

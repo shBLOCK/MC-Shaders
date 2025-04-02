@@ -9,7 +9,7 @@ in vec2 mc_Entity;
 
 out vec3 vPos;
 out vec3 vViewPos;
-out vec3 vNormal;
+flat out vec3 vNormal;
 out vec3 vMarker;
 flat out int vEntity;
 
