@@ -26,7 +26,7 @@ flat out int gModeMask;
 void _updateFade() {
     gFade.x = (abs(FACE_FADE_OFFSET) - gDistance) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET) + 1.0;
     gFade.y = (abs(FRAME_FADE_OFFSET) - gDistance) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET) + 1.0;
-    gFade = clamp(gFade, vec2(-1e30), vec2(1e30));
+    gFade = clamp(gFade, vec2(-1e30), vec2(1e30)); // inf doesn't work well with inter-stage smoothing
 }
 
 #if DISTANCE_MODE == 0 // per-vertex
