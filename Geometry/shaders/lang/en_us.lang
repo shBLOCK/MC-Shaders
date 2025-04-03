@@ -13,9 +13,8 @@ value.SHOW_BACKFACE.1 = Wireframe
 value.SHOW_BACKFACE.2 = Face
 value.SHOW_BACKFACE.3 = Wireframe & Face
 
-option.FRAME_THICKNESS_PX = Wireframe Thickness
-option.FRAME_THICKNESS_PX.comment = Wireframe line width in pixels (1/16 of a block).
-suffix.FRAME_THICKNESS_PX = px
+option.FRAME_THICKNESS = Wireframe Thickness
+option.FRAME_THICKNESS.comment = Wireframe line width.
 
 option.DISTANCE_MODE = Distance Mode
 value.DISTANCE_MODE.0 = Per Vertex

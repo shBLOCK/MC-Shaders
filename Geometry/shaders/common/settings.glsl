@@ -1,7 +1,6 @@
 #include "utils.glsl"
 
-#define FRAME_THICKNESS_PX 0.5 // [0.1 0.25 0.5 0.75 1 1.25 1.5 1.75 2 3 4 5 6 7]
-#define FRAME_THICKNESS ((1.0/16.0) * FRAME_THICKNESS_PX)
+#define FRAME_THICKNESS 0.03 // [0.0 0.01 0.03 0.05 0.1 0.15 0.2 0.3 0.4 0.5]
 
 // 0: triangle; 1: quad
 #define GEOMETRY_MODE 0 // [0 1]
