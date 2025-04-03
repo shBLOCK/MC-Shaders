@@ -4,8 +4,8 @@ vec2 _clampInf(vec2 vec) {
 
 vec2 _getFade(float d) {
     return vec2(
-        (abs(FACE_FADE_OFFSET) - d) * FACE_FADE_SPEED * sign(FACE_FADE_OFFSET) + 1.0, // x: face
-        (abs(FRAME_FADE_OFFSET) - d) * FRAME_FADE_SPEED * sign(FRAME_FADE_OFFSET) + 1.0 // y: frame
+        (abs(FACE_FADE_OFFSET) - d) * (1.0 / FACE_FADE_REGION) * sign(FACE_FADE_OFFSET) + 1.0, // x: face
+        (abs(FRAME_FADE_OFFSET) - d) * (1.0 / FRAME_FADE_REGION) * sign(FRAME_FADE_OFFSET) + 1.0 // y: frame
     );
 }
 
@@ -40,11 +40,11 @@ void main() {
 
     // calculate distance
     #if DISTANCE_MODE == 0
-        float m_distance[3] = {
+        float m_distance[3] = float[3](
             length(vViewPos[0]),
             length(vViewPos[1]),
             length(vViewPos[2])
-        };
+        );
     #elif DISTANCE_MODE == 1
         #if GEOMETRY_MODE == 0
             float m_distance = length((vViewPos[0] + vViewPos[1] + vViewPos[2]) / 3.0);
@@ -61,11 +61,11 @@ void main() {
     
     // calculate fade
     #if DISTANCE_MODE == 0
-        vec2 m_fade[3] = {
+        vec2 m_fade[3] = vec2[3](
             _getFade(m_distance[0]),
             _getFade(m_distance[1]),
             _getFade(m_distance[2])
-        };
+        );
         bool _frameNotFaded = m_fade[0].y >= 0.0 || m_fade[1].y >= 0.0 || m_fade[2].y >= 0.0;
     #elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2
         vec2 m_fade = _getFade(m_distance);

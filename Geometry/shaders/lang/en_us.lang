@@ -1,25 +1,50 @@
-screen.MISC = Misc
+screen.FADING = Fading Settings
+screen.FACE = Geometry Face Settings
+screen.MISC = Misc. Settings
+profile.comment = Profiles only affect settings in §6Fading Settings§r. If you messed up the rest of the settings, changing this most likely won't fix anything, use the Iris's reset button to reset the settings.
 
-option.FRAME_THICKNESS = Wireframe Thickness
-
-option.FACE_FADE_OFFSET = Face Fade Offset
-option.FACE_FADE_OFFSET.comment = How far away does the geometry faces start to fade away.
-option.FACE_FADE_SPEED = Face Fade Speed
-option.FACE_FADE_SPEED.comment = How quickly does the geometry faces fade away (after <Face Fade Offset> is reached).
-
-option.FRAME_FADE_OFFSET = Wireframe Fade Offset
-option.FRAME_FADE_OFFSET.comment = How far away does the wireface start to fade away.
-option.FRAME_FADE_SPEED = Wireframe Fade Speed
-option.FRAME_FADE_SPEED.comment = How quickly does the geometry faces fade away (after <Wireframe Fade Offset> is reached).
-
-option.FRAME_FADE_MIN = Wireframe Face Min
-option.FRAME_FADE_MIN.comment = The minimal relative thickness of the faded wireframe. (e.g. If <Wireframe Thickness> = 0.1, <Wireframe Face Min> = 0.5, then the actual thickness can't go below 0.05)
-
-option.GEOMETRY_MODE = Geometry Mode
+option.GEOMETRY_MODE = Geometry Type
 value.GEOMETRY_MODE.0 = Triangle
 value.GEOMETRY_MODE.1 = Quad
 
+option.SHOW_BACKFACE = Show Backface
+value.SHOW_BACKFACE.0 = None
+value.SHOW_BACKFACE.1 = Wireframe
+value.SHOW_BACKFACE.2 = Face
+value.SHOW_BACKFACE.3 = Wireframe & Face
+
+option.FRAME_THICKNESS = Wireframe Thickness
+option.FRAME_THICKNESS.comment = Wireframe line width.
+
 option.DISTANCE_MODE = Distance Mode
 value.DISTANCE_MODE.0 = Per Vertex
-value.DISTANCE_MODE.1 = Primitive Center
-value.DISTANCE_MODE.2 = Min Vertex
+value.DISTANCE_MODE.1 = Center
+value.DISTANCE_MODE.2 = Closest Vertex
+
+option.FRAME_FADE_MIN = Wireframe Face Min
+option.FRAME_FADE_MIN.comment = The minimal relative thickness of the faded wireframe. (e.g. If <Wireframe Thickness> = 0.1, <Wireframe Face Min> = 0.5, then the actual thickness can't go below 0.05)
+suffix.FRAME_FADE_MIN = x
+
+option.FACE_FADE_OFFSET = Face Fade Offset
+option.FACE_FADE_OFFSET.comment = How far away does the geometry faces start to fade away.
+suffix.FACE_FADE_OFFSET = \u0020blocks
+option.FACE_FADE_REGION = Face Fade Region
+option.FACE_FADE_REGION.comment = The size of the distance range in which the faces gradually fade away.
+suffix.FACE_FADE_REGION = \u0020blocks
+option.FRAME_FADE_OFFSET = Wireframe Fade Offset
+option.FRAME_FADE_OFFSET.comment = How far away does the wireface start to fade away.
+suffix.FRAME_FADE_OFFSET = \u0020blocks
+option.FRAME_FADE_REGION = Wireframe Fade Region
+option.FRAME_FADE_REGION.comment = The size of the distance range in which the frame gradually fade away.
+suffix.FRAME_FADE_REGION = \u0020blocks
+
+option.FACE_SEPARATE = Separate Face
+option.FACE_SEPARATE.comment = Make the faces a separate geometry, this is required for face displacement and face scaling.
+option.FACE_FADE_MODE = Face Fade Mode
+option.FACE_FADE_MODE.comment = How the faces fade away. §4*SCALE MODE REQUIRE SEPARATE FACE!*§r
+value.FACE_FADE_MODE.0 = Clip
+value.FACE_FADE_MODE.1 = Scale
+option.FACE_DISPLACEMENT = Face Displacement
+option.FACE_DISPLACEMENT.comment = Face displacement effect. §4*REQUIRES SEPARATE FACE!*$r
+option.FACE_DISPLACEMENT_CURVE = Face Displacement Curve
+option.FACE_DISPLACEMENT_CURVE.comment = Higher value -> displacement speeds up as displacement increase.
