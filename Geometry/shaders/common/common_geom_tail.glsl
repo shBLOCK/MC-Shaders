@@ -72,6 +72,14 @@ void main() {
         bool _frameNotFaded = m_fade.y >= 0.0;
     #endif
 
+    #ifndef FACE_SEPARATE
+        #if DISTANCE_MODE == 0
+            bool _faceNotFaded = m_fade[0].x >= 0.0 || m_fade[1].x >= 0.0 || m_fade[2].x >= 0.0;
+        #elif DISTANCE_MODE == 1 || DISTANCE_MODE == 2
+            bool _faceNotFaded = m_fade.x >= 0.0;
+        #endif
+    #endif
+
     // convinent macros
     #if DISTANCE_MODE == 0
         #define M_DISTANCE(i) m_distance[i]
@@ -88,7 +96,12 @@ void main() {
             noInvertBackface = true;
     #endif
 
-    if (_frameNotFaded) {
+    if (
+        _frameNotFaded
+        #ifndef FACE_SEPARATE
+            || _faceNotFaded
+        #endif
+    ) {
         bool isFrontface = dot(vViewPos[0], gl_NormalMatrix * vNormal[0]) <= 0.0;
 
         if ( // backface guard
